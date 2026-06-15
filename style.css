@@ -386,7 +386,7 @@ h1 {
 }
 
 .card.revealed-card::after {
-    content: 'clique moi ♡';
+    content: 'clique dessus ♡';
     position: absolute;
     bottom: 0;
     left: 0;
