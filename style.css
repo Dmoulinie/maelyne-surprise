@@ -1,0 +1,516 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --font: 'Playfair Display', Georgia, serif;
+}
+
+body {
+    min-height: 100vh;
+    font-family: var(--font);
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #ffaad4 0%, #ff69b4 35%, #d055b0 58%, #85bfee 100%);
+    background-attachment: fixed;
+}
+
+/* ── Floating hearts ───────────────────────────── */
+
+.heart {
+    position: fixed;
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.55);
+    z-index: 0;
+    animation: floatUp linear forwards;
+    will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+    0%   { transform: translateY(105vh) scale(0) rotate(0deg);   opacity: 0; }
+    8%   { opacity: 1; }
+    85%  { opacity: 0.4; }
+    100% { transform: translateY(-10vh) scale(1) rotate(20deg); opacity: 0; }
+}
+
+/* ── Landing ───────────────────────────────────── */
+
+#landing {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+#landing.fade-out {
+    opacity: 0;
+    transform: scale(0.96);
+    pointer-events: none;
+}
+
+.landing-content {
+    text-align: center;
+    color: #fff;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+    padding: 0.45rem 1.4rem;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+}
+
+h1 {
+    font-size: clamp(2.8rem, 9vw, 5.5rem);
+    font-weight: 400;
+    line-height: 1.15;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.12);
+}
+
+.subtitle {
+    font-style: italic;
+    font-size: 1.05rem;
+    opacity: 0.78;
+}
+
+/* Open button */
+.open-btn {
+    margin-top: 0.8rem;
+    background: #fff;
+    color: #e0509a;
+    border: none;
+    border-radius: 999px;
+    padding: 0.9rem 3.2rem;
+    font-size: 1.15rem;
+    font-family: var(--font);
+    cursor: pointer;
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.15);
+    animation: pulse 2.4s ease-in-out infinite;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.open-btn:hover {
+    animation: none;
+    transform: scale(1.07);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.22);
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1);    box-shadow: 0 6px 32px rgba(0,0,0,0.15); }
+    50%       { transform: scale(1.04); box-shadow: 0 10px 44px rgba(0,0,0,0.2); }
+}
+
+/* ── Gallery ───────────────────────────────────── */
+
+#gallery {
+    min-height: 100vh;
+    padding: 3.5rem 1.5rem 4rem;
+    position: relative;
+    z-index: 1;
+}
+
+#gallery.hidden {
+    display: none;
+}
+
+.gallery-title {
+    text-align: center;
+    color: #fff;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 400;
+    margin-bottom: 2.8rem;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.12);
+    opacity: 0;
+    transform: translateY(-12px);
+    transition: opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s;
+}
+
+.gallery-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Cards grid */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.8rem;
+    max-width: 920px;
+    margin: 0 auto;
+}
+
+/* Polaroid card */
+.card {
+    background: #fff0f6;
+    padding: 0.75rem 0.75rem 2.6rem;
+    border-radius: 3px;
+    box-shadow: 0 8px 32px rgba(160, 30, 100, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: default;
+
+    /* animated in by JS via .visible */
+    opacity: 0;
+    transform: scale(0.6) translateY(30px) rotate(var(--rot, 0deg));
+    transition:
+        opacity   0.5s ease,
+        transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+        box-shadow 0.3s ease;
+    will-change: transform, opacity;
+}
+
+.card.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(var(--rot, 0deg));
+}
+
+.card:hover {
+    transform: scale(1.05) translateY(-8px) rotate(0deg) !important;
+    box-shadow: 0 22px 60px rgba(160, 30, 100, 0.35), 0 4px 12px rgba(0, 0, 0, 0.12);
+    z-index: 10;
+    position: relative;
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #fce4ec, #e8d5f5, #dbeafe);
+}
+
+/* Spoiler overlay */
+.card {
+    position: relative;
+}
+
+.spoiler {
+    position: absolute;
+    inset: 0.75rem 0.75rem 2.6rem;
+    background: linear-gradient(135deg, #ffaad4, #ff69b4 50%, #c070c0);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.spoiler.revealed {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+}
+
+.spoiler-icon {
+    font-size: 2.2rem;
+    color: #fff;
+    animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+.spoiler-text {
+    font-family: var(--font);
+    font-style: italic;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.92);
+    letter-spacing: 0.03em;
+    text-align: center;
+    padding: 0 0.5rem;
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    30%       { transform: scale(1.18); }
+    50%       { transform: scale(1); }
+    65%       { transform: scale(1.1); }
+}
+
+/* Back button */
+.back-btn {
+    display: block;
+    margin: 3rem auto 0;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 999px;
+    padding: 0.7rem 2rem;
+    font-size: 1rem;
+    font-family: var(--font);
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.2s ease, transform 0.2s ease;
+    opacity: 0;
+    transition: opacity 0.5s ease 0.8s, background 0.2s ease, transform 0.2s ease;
+}
+
+.back-btn.visible {
+    opacity: 1;
+}
+
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+}
+
+/* ── Modal ─────────────────────────────────────── */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(120, 20, 70, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-box {
+    background: #fff0f6;
+    border-radius: 16px;
+    box-shadow: 0 24px 80px rgba(160, 30, 100, 0.3);
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    max-width: 780px;
+    width: 100%;
+    max-height: 90vh;
+    position: relative;
+    transform: scale(0.92) translateY(16px);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.open .modal-box {
+    transform: scale(1) translateY(0);
+}
+
+.modal-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    background: rgba(255, 255, 255, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #b04070;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 1;
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: scale(1.1);
+}
+
+.modal-img-wrap {
+    flex: 0 0 38%;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.modal-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #fce4ec, #e8d5f5, #dbeafe);
+}
+
+.modal-info {
+    flex: 1;
+    padding: 2.5rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+    overflow-y: auto;
+}
+
+.modal-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: #d060a0;
+    text-transform: uppercase;
+}
+
+#modalTitle {
+    font-family: var(--font);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #8b2060;
+    line-height: 1.25;
+}
+
+#modalDesc {
+    font-family: var(--font);
+    font-style: italic;
+    font-size: 1rem;
+    color: #7a3060;
+    line-height: 1.7;
+}
+
+/* Card revealed = curseur pointer + hint au survol */
+.card.revealed-card {
+    cursor: pointer;
+}
+
+.card.revealed-card::after {
+    content: 'clique moi ♡';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font);
+    font-style: italic;
+    font-size: 0.78rem;
+    color: #d060a0;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+}
+
+.card.revealed-card:hover::after {
+    opacity: 1;
+}
+
+/* ── Responsive — iPhone 14 Plus (428px) et mobile ── */
+
+@media (max-width: 500px) {
+
+    /* Landing */
+    .landing-content {
+        padding: 1.5rem 1.2rem;
+        gap: 1rem;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+        padding: 0.4rem 1.1rem;
+    }
+
+    h1 {
+        font-size: 2.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .open-btn {
+        padding: 1rem 2.6rem;
+        font-size: 1.05rem;
+        /* cible tactile confortable */
+        min-height: 52px;
+    }
+
+    /* Gallery */
+    #gallery {
+        padding: 2rem 1rem 3rem;
+    }
+
+    .gallery-title {
+        font-size: 1.6rem;
+        margin-bottom: 1.6rem;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.85rem;
+    }
+
+    .card {
+        padding: 0.5rem 0.5rem 2.2rem;
+    }
+
+    /* Hint toujours visible sur touch (pas de hover) */
+    .card.revealed-card::after {
+        opacity: 1;
+        font-size: 0.72rem;
+    }
+
+    /* Spoiler */
+    .spoiler-icon  { font-size: 1.8rem; }
+    .spoiler-text  { font-size: 0.78rem; }
+
+    /* Back button */
+    .back-btn {
+        min-height: 48px;
+        padding: 0.8rem 1.8rem;
+    }
+
+    /* Modal — plein écran vertical */
+    .modal-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .modal-box {
+        flex-direction: column;
+        width: 100%;
+        max-height: 92vh;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+    }
+
+    .modal-overlay.open .modal-box {
+        transform: translateY(0);
+    }
+
+    .modal-img-wrap {
+        flex: 0 0 38%;
+        max-height: 38vh;
+    }
+
+    .modal-close {
+        width: 2.4rem;
+        height: 2.4rem;
+        font-size: 1rem;
+        top: 0.75rem;
+        right: 0.75rem;
+    }
+
+    .modal-info {
+        padding: 1.2rem 1.4rem 2rem;
+        gap: 0.65rem;
+        justify-content: flex-start;
+    }
+
+    #modalTitle { font-size: 1.15rem; }
+    #modalDesc  { font-size: 0.92rem; line-height: 1.6; }
+}

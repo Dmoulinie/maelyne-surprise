@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4 mois ensemble ♡</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Landing -->
+    <section id="landing">
+        <div class="landing-content">
+            <div class="badge">4 mois ensemble ♡</div>
+            <h1>Coucouu<br>j'ai un petit cadeau<br>pour toi</h1>
+            <p class="subtitle">quelque chose qui nous unit</p>
+            <button id="openBtn" class="open-btn">Ouvrir</button>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="hidden">
+        <h2 class="gallery-title">Nos souvenirs ♡</h2>
+        <div class="cards-grid" id="cardsGrid">
+            <div class="card" data-title="Au début à moto" data-description="Les premières fois que tu montais derriere moi, (j'étais épaissss hein). C'est la que j'ai découvert que j'adorais faire de la moto avec toi 🤭​"><img src="img/photo1.jpg" alt="Souvenir 1"><div class="spoiler"><span class="spoiler-icon">♡</span><span class="spoiler-text">Appuie pour découvrir</span></div></div>
+            <div class="card" data-title="Dans la BM de Gaël" data-description="Le mood était incroyableeee, t'as mis la musique parfaite pour ce moment j'ai trop kiffé 🥰​ (mes cheveux c'est une catastrophe par contre)"><img src="img/photo2.jpg" alt="Souvenir 2"><div class="spoiler"><span class="spoiler-icon">♡</span><span class="spoiler-text">Appuie pour découvrir</span></div></div>
+            <div class="card" data-title="Le nouvel an" data-description="Quand on s'est barré de la soirée à Naia, on a abandonné Goeffrey 😅​, on a tellement bien fait, la soirée était bien mieux ensemble, on a mangé les 12 raisins a 23h59 tout pile et ensuite tu m'as embrassé pour la premiere fois, notre premier bisou face aux feux d'artifices à 00h01 on était tout timides c'était trop mignon en y repensant, quel moment magique."><img src="img/photo3.jpg" alt="Souvenir 4"><div class="spoiler"><span class="spoiler-icon">♡</span><span class="spoiler-text">Appuie pour découvrir</span></div></div>
+            <div class="card" data-title="Notre premier mois ensemble" data-description="Tu te souviens ? Quand on a voulu découvrir une plage et qu'au final il y avait tellement de vent qu'on se faisait fouetter par le sable, au final on a mangé sur une table tranquillement et on a exploré le Fort Teremba, je l'avais jamais fait et en plus on est reparti avec des belles photos.Ensuite on est allé dormir à Farino dans un bungalow en plein milieu de la forêt, on était tellement chill posé sur le balcon et avec le petit dej vraiment bon le matin, juste incroyable."><img src="img/photo4.jpg" alt="Souvenir 4"><div class="spoiler"><span class="spoiler-icon">♡</span><span class="spoiler-text">Appuie pour découvrir</span></div></div>
+            <div class="card" data-title="Notre premier restaurant" data-description="Notre week end déconnexion (alors que c'était en semaine), je suis jamais allé aussi loin dans le nord, ça m'a vraiment fait du bien de prendre des vacances. On a découvert Koné et Voh, vraiment c'est un autre pays mais c'est incroyable de faire ça, il faut meme qu'on aille plus loin, qu'on se prenne une semaine et qu'on fasse le tour de la Calédonie pour vraiment voir tout ce qui reste à découvrir ici. La fameuse grotte dont Jean No a parlé, je veux la découvrir avec toi, je veux tout découvrir avec toi, je te veux toi ❤️​"><img src="img/photo5.jpg" alt="Souvenir 5"><div class="spoiler"><span class="spoiler-icon">♡</span><span class="spoiler-text">Appuie pour découvrir</span></div></div>
+            <div class="card" data-title="Le Jet-ski" data-description="Tu t'y attendais ? Haha, j'étais obligé de le mettre 😂​, quel souvenir INCROYABLE, faire du jetski avec toi la !! Je veux tellement en refaire, 30 minutes c'était pas assez RAHHHHH, je m'en fiche, on en refera bientôt, je te le promets. C'était vraiment magique comment moment, la mer était parfaite, tu étais magnifique avec tes cheveux aux vents, tes beaux yeux verts. Je t'aime Maëlyne ❤️ Joyeux 4 mois."><img src="img/photo6.jpg" alt="Souvenir 6"><div class="spoiler"><span class="spoiler-icon">♡</span><span class="spoiler-text">Appuie pour découvrir</span></div></div>
+        </div>
+        <button id="backBtn" class="back-btn">← Retour</button>
+    </section>
+
+    <!-- Modal -->
+    <div id="modal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-box">
+            <button class="modal-close" aria-label="Fermer">✕</button>
+            <div class="modal-img-wrap">
+                <img id="modalImg" src="" alt="">
+            </div>
+            <div class="modal-info">
+                <p class="modal-label">♡ souvenir</p>
+                <h3 id="modalTitle"></h3>
+                <p id="modalDesc"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
